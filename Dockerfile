@@ -42,6 +42,9 @@ LABEL io.k8s.description="Platform for building Java (fatjar) applications with 
 # COPY Additional files,configurations that we want to ship by default, like a default setting.xml
 COPY ./contrib/settings.xml $HOME/.m2/
 
+ADD test/loadlibs /preloadlibs/
+RUN cd /preloadlibs && mvn clean package && rm -rf /preloadlibs/test-app
+
 LABEL io.openshift.s2i.scripts-url=image:///usr/local/sti
 COPY ./sti/bin/ /usr/local/sti
 
